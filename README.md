@@ -2,10 +2,10 @@
 
 A polished **Next.js + AI** full‑stack learning project that generates UX microcopy (buttons, tooltips, banners, error messages) using OpenAI models. Includes advanced features like **Improve Copy**, **Translate Copy**, and a fully custom **dark‑mode professional UI**.
 
-This project is perfect for:
+This project is to showcase:
 
-* Frontend engineers wanting practical AI integration experience
-* Showcasing full‑stack skills using Next.js App Router
+* Practical AI integration experience
+* Full‑stack skills using Next.js App Router
 * Building a portfolio‑ready AI product
 
 ---
@@ -208,7 +208,6 @@ Feel free to open issues or PRs for improvements, new features, or suggestions.
 * Save copy to localStorage
 * Copy-to-clipboard button
 * History panel
-* Language selector
 * Framer Motion animation upgrades
 
 ---

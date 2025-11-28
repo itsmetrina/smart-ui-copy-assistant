@@ -16,10 +16,16 @@ export default function CopyForm({ onResult }: any) {
             body: JSON.stringify({ component, tone, context })
         });
         const data = await res.json();
-        onResult(data.ideas);
+        onResult({
+            ideas: data.ideas,
+            action: "Generate",
+            component,
+            tone,
+            context
+        });
         setLoading(false);
     }
-    
+
     return (
         <div className="card space-y-4">
             <select
