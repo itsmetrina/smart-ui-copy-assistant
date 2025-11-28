@@ -40,7 +40,7 @@ export default function Home() {
 
 	return (
 		<main className="max-w-lg mx-auto p-6 space-y-6">
-			<h1 className="text-3xl font-bold">
+			<h1 className="text-3xl font-bold text-center">
 				Smart UI Copy Assistant
 			</h1>
 			<CopyForm onResult={setResult} />
