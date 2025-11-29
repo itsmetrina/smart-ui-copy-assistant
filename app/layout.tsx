@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-	title: "Smart UI Copy Assistant",
+	title: "Smart UI Assistant",
 	description: "AI-powered UX microcopy generator",
 };
 

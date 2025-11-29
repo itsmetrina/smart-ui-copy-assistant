@@ -1,8 +1,9 @@
 "use client";
 
 import { Copy, Languages, Sparkles } from "lucide-react";
+import LoadingBar from "./LoadingBar";
 
-export default function CopyPreview({ ideas, onImprove, onTranslate }: { ideas: string[], onImprove: any, onTranslate: any }) {
+export default function CopyPreview({ ideas, improvingText, translatingText, onImprove, onTranslate }: { ideas: string[], improvingText: string|null, translatingText: string|null, onImprove: any, onTranslate: any }) {
     if (!ideas || ideas.length === 0) return null;
 
     return (
@@ -10,6 +11,8 @@ export default function CopyPreview({ ideas, onImprove, onTranslate }: { ideas: 
             <h2 className="text-2xl font-semibold">Generated Copy</h2>
             {ideas.map((text: string, i: number) => (
                 <div key={i} className="card">
+                    {improvingText === text && <LoadingBar />}
+                    {translatingText === text && <LoadingBar />}
                     <p className="text-lg mb-3">{text}</p>
                     <div className="flex gap-3">
                         <button

@@ -9,10 +9,14 @@ export default function useAI() {
     const [result, setResult] = useState<string[]>([]);
     const [improved, setImproved] = useState("");
     const [translated, setTranslated] = useState<any>(null);
-    const [loading, setLoading] = useState(false);
     const { cooldown, startCooldown } = useCooldown();
     const { canCall } = useDebounce(800);
     const { history, add, clear } = useHistory();
+
+    const [generating, setGenerating] = useState(false);
+    const [improvingText, setImprovingText] = useState<string | null>(null);
+    const [translatingText, setTranslatingText] = useState<string | null>(null);
+
 
     async function handleRateLimit(res: Response) {
         if (res.status === 429) {
@@ -22,55 +26,56 @@ export default function useAI() {
         }
         return false;
     }
+
     // GENERATE
     async function generate(component: string, tone: string, context: string) {
         if (!canCall()) return;
-        setLoading(true);
+        setGenerating(true);
         const res = await fetch("/api/generate", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ component, tone, context }),
         });
         if (await handleRateLimit(res)) {
-            setLoading(false);
+            setGenerating(false);
             return;
         }
         const data = await res.json();
         setResult(data.ideas);
         add({ timestamp: Date.now(), action: "Generate", component, tone, context, ideas: data.ideas });
-        setLoading(false);
+        setGenerating(false);
     }
 
     // IMPROVE
     async function improve(text: string) {
         if (!canCall()) return;
-        setLoading(true);
+        setImprovingText(text);
         const res = await fetch("/api/improve", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ text }),
         });
         if (await handleRateLimit(res)) {
-            setLoading(false);
+            setImprovingText(null);
             return
         };
         const data = await res.json();
         setImproved(data.improved);
         add({ timestamp: Date.now(), action: "Improve", context: text, ideas: [data.improved], component: null, tone: null });
-        setLoading(false);
+        setImprovingText(null);
     }
 
     // TRANSLATE
     async function translate(text: string) {
         if (!canCall()) return;
-        setLoading(true);
+        setTranslatingText(text);
         const res = await fetch("/api/translate", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ text }),
         });
         if (await handleRateLimit(res)) {
-            setLoading(false);
+            setTranslatingText(null);
             return;
         };
         const data = await res.json();
@@ -83,7 +88,7 @@ export default function useAI() {
             component: null,
             tone: null
         });
-        setLoading(false);
+        setTranslatingText(null);
     }
 
     async function clearImproved() {
@@ -98,7 +103,9 @@ export default function useAI() {
         result,
         improved,
         translated,
-        loading,
+        generating,
+        improvingText,
+        translatingText,
         cooldown,
         generate,
         improve,

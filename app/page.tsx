@@ -16,7 +16,9 @@ export default function Home() {
 		result,
 		improved,
 		translated,
-		loading,
+		generating,
+		improvingText,
+		translatingText,
 		cooldown,
 		generate,
 		improve,
@@ -34,12 +36,12 @@ export default function Home() {
 				<h1 className="text-3xl font-bold text-center">
 					Smart UI Copy Assistant
 				</h1>
-				{loading && <LoadingBar />}
+				{generating && <LoadingBar />}
 				<CopyForm onGenerate={generate} />
 				<CooldownBanner cooldown={cooldown} />
 				<div ref={scrollRef}>
-					<CopyPreview ideas={result} onImprove={improve} onTranslate={translate} />
-					<ImproveResult text={improved} onTranslate={translate} onClose={clearImproved} />
+					<CopyPreview ideas={result} improvingText={improvingText} translatingText={translatingText} onImprove={improve} onTranslate={translate} />
+					<ImproveResult text={improved} translatingText={translatingText} onTranslate={translate} onClose={clearImproved} />
 					<TranslateResult data={translated} onClose={clearTranslated} />
 				</div>
 			</main>

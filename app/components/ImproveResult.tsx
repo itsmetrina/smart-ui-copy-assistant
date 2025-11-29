@@ -1,12 +1,14 @@
 "use client";
 
 import { Copy, Languages, Sparkles, SquareX } from "lucide-react";
+import LoadingBar from "./LoadingBar";
 
-export default function ImproveResult({ text, onTranslate, onClose }: any) {
+export default function ImproveResult({ text, translatingText, onTranslate, onClose }: any) {
     if (!text) return null;
 
     return (
         <div className="card animate-fadeIn mt-4">
+            {translatingText && <LoadingBar />}
             <div className="flex justify-between items-center">
                 <h3 className="text-lg font-semibold text-purple-300">
                     <span className="flex flex-row items-center gap-2">

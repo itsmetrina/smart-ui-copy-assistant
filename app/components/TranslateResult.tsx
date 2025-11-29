@@ -3,7 +3,6 @@
 import { Copy, SquareX } from "lucide-react";
 
 export default function TranslateResult({ data, onClose }: any) {
-    console.log(data, "data")
     if (!data) return null;
 
     return (
